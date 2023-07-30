@@ -600,20 +600,6 @@ public extension UIViewController {
 }
 #endif
 
-public enum AppEnvironment: String {
-    case development, production, sandbox
-    public var isRelease: Bool { return self == .production }
-    public var isDebug: Bool { return self == .development }
-    public static var current: AppEnvironment {
-#if DEBUG
-        return .development
-#else
-        if Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" { return .sandbox }
-        return .production
-#endif
-    }
-}
-
 // MARK: - String Extensions
 public extension String {
     // MARK: - Localized Strings
@@ -974,11 +960,18 @@ public extension UIImage {
 public extension UIImage {
     /// Returns scaled image, returns nil if failed.
     func resize(to size: CGSize) -> UIImage? {
+        #if os(watchOS)
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         draw(in: CGRect(origin: .zero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledImage
+        #else
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+        #endif
     }
 
     func scaledToWidth(_ width: CGFloat) -> UIImage? {
