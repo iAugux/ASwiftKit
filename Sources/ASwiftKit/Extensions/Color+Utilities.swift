@@ -3,6 +3,7 @@
 
 #if os(iOS)
 import UIKit
+import SwiftUI
 
 public extension UIColor {
     convenience init(hex: UInt, alpha: CGFloat = 1) {
@@ -21,13 +22,17 @@ public extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 
-    func toHexString(uppercased: Bool = false) -> String {
+    func toHex() -> UInt {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
+        return UInt(r * 255) << 16 | UInt(g * 255) << 8 | UInt(b * 255) << 0
+    }
+
+    func toHexString(uppercased: Bool = false) -> String {
+        let rgb = toHex()
         let result = String(format: "#%06x", rgb)
         return uppercased ? result.uppercased() : result
     }
@@ -99,4 +104,12 @@ public extension UIColor {
 public extension CGColor {
     var uiColor: UIColor { return UIColor(cgColor: self) }
 }
+
+@available(iOS 14.0, *)
+public extension Color {
+    func toHex() -> UInt {
+        UIColor(self).toHex()
+    }
+}
+
 #endif
