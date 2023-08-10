@@ -29,7 +29,7 @@ public extension UIColor {
         var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
         let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
-        return UInt(rgb)
+        return UInt(max(0, rgb))
     }
 
     func toHexString(uppercased: Bool = false) -> String {
