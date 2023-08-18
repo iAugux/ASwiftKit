@@ -28,4 +28,16 @@ public extension AppEnvironment {
         return false
 #endif
     }()
+
+    static let hardwareVersion: String = {
+#if DEBUG
+        // prevent Xcode Preivews from crashing
+        return AppEnvironment.isRunningForPreviews ? "**Xcode Preivew**" : "**Debug Mode**"
+#else
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let versionCode = String(utf8String: NSString(bytes: &systemInfo.machine, length: Int(_SYS_NAMELEN), encoding: String.Encoding.ascii.rawValue)!.utf8String!)!
+        return versionCode
+#endif
+    }()
 }
