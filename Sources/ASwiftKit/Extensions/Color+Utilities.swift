@@ -2,8 +2,8 @@
 // Copyright © 2021 Augus <iAugux@gmail.com>
 
 #if os(iOS)
-import UIKit
 import SwiftUI
+import UIKit
 
 public extension UIColor {
     convenience init(hex: UInt, alpha: CGFloat = 1) {
