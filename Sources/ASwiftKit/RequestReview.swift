@@ -5,12 +5,10 @@ import StoreKit
 
 public enum AppStore {
     public static func requestReview(shortestTime: UInt32 = 50, longestTime: UInt32 = 500) {
-        #if !DEBUG
+#if DEBUG
         // Do nothing
-        #else
-            let shortestTime: UInt32 = shortestTime
-            let longestTime: UInt32 = longestTime
-
+#else
+        assert(shortestTime < longestTime)
         let timeInterval = (shortestTime...longestTime).randomElement()!
         delay(in: Double(timeInterval)) {
             if #available(iOS 14.0, *) {
@@ -20,7 +18,7 @@ public enum AppStore {
                 SKStoreReviewController.requestReview()
             }
         }
-        #endif
+#endif
     }
 }
 #endif
