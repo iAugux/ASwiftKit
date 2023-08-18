@@ -29,6 +29,7 @@ public extension AppEnvironment {
 #endif
     }()
 
+    @inline(__always)
     static let hardwareVersion: String = {
 #if DEBUG
         // prevent Xcode Preivews from crashing
