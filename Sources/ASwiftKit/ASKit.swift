@@ -939,9 +939,11 @@ public extension UIImage {
     var originalRender: UIImage { return withRenderingMode(.alwaysOriginal) }
     var templateRender: UIImage { return withRenderingMode(.alwaysTemplate) }
 
-    func roundedScaledToSize(_ size: CGSize) -> UIImage { return (resize(to: size) ?? self).rounded() }
+    func roundedScaledToSize(_ size: CGSize) -> UIImage? {
+        return (resize(to: size) ?? self).rounded()
+    }
 
-    func rounded(radius: CGFloat? = nil) -> UIImage {
+    func rounded(radius: CGFloat? = nil) -> UIImage? {
         let imageLayer = CALayer()
         imageLayer.frame = CGRect(origin: .zero, size: size)
         imageLayer.contents = cgImage
@@ -952,7 +954,7 @@ public extension UIImage {
         imageLayer.render(in: UIGraphicsGetCurrentContext()!)
         let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return roundedImage ?? UIImage()
+        return roundedImage
     }
 }
 
