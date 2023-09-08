@@ -11,10 +11,10 @@ public func delay(in seconds: TimeInterval, execute work: @escaping @convention(
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: work)
 }
 
-public func runInMainQueue(execute work: @escaping @convention(block) () -> Void) {
-    if Thread.isMainThread {
-            work()
-    } else {
+public func runInMainQueue(force: Bool = false, execute work: @escaping @convention(block) () -> Void) {
+    if force || !Thread.isMainThread {
         DispatchQueue.main.async(execute: work)
+    } else {
+        work()
     }
 }
