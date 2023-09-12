@@ -979,14 +979,14 @@ public extension UIImage {
     func scaledToWidth(_ width: CGFloat) -> UIImage? {
         guard width < size.width else { return self }
         let scale = width / size.width
-        let newSize = CGSize(width: width, height: size.height * scale)
+        let newSize = CGSize(width: floor(width), height: floor(size.height * scale))
         return resize(to: newSize)
     }
 
     func scaledToHeight(_ height: CGFloat) -> UIImage? {
         guard height < size.height else { return self }
         let scale = height / size.height
-        let newSize = CGSize(width: size.width * scale, height: height)
+        let newSize = CGSize(width: floor(size.width * scale), height: floor(height))
         return resize(to: newSize)
     }
 }
