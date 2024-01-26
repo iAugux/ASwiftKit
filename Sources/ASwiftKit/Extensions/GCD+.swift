@@ -18,3 +18,7 @@ public func runInMainQueue(force: Bool = false, execute work: @escaping @convent
         work()
     }
 }
+
+public func runInBackgroundQueue(qos: DispatchQoS.QoSClass = .default, execute work: @escaping @convention(block) () -> Void) {
+    DispatchQueue.global(qos: qos).async(execute: work)
+}
