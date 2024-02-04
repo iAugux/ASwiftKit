@@ -160,3 +160,9 @@ public extension Array {
         insert(remove(at: index), at: newIndex)
     }
 }
+
+public extension Repeated {
+    func toArray() -> [Element] {
+        Array(self)
+    }
+}
