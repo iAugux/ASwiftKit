@@ -166,3 +166,15 @@ public extension Repeated {
         Array(self)
     }
 }
+
+public extension RangeReplaceableCollection where Element: Equatable {
+    mutating func toggleElement(_ element: Element) {
+        if let index = self.firstIndex(of: element) {
+            // Element exists, remove it
+            remove(at: index)
+        } else {
+            // Element doesn't exist, add it
+            append(element)
+        }
+    }
+}
