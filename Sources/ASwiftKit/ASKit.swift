@@ -971,15 +971,23 @@ public extension UIImage {
 // MARK: - - UIImage + Resize
 public extension UIImage {
     /// Returns scaled image, returns nil if failed.
-    func resize(to size: CGSize) -> UIImage? {
+    func resize(to size: CGSize, customScale: CGFloat? = nil) -> UIImage? {
         #if os(watchOS)
+        let scale = customScale ?? self.scale
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         draw(in: CGRect(origin: .zero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledImage
         #else
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer: UIGraphicsImageRenderer
+        if let customScale {
+            let format = UIGraphicsImageRendererFormat()
+            format.scale = customScale
+            renderer = UIGraphicsImageRenderer(size: size, format: format)
+        } else {
+            renderer = UIGraphicsImageRenderer(size: size)
+        }
         return renderer.image { _ in
             self.draw(in: CGRect(origin: .zero, size: size))
         }
