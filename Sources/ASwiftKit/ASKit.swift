@@ -994,18 +994,18 @@ public extension UIImage {
         #endif
     }
 
-    func scaledToWidth(_ width: CGFloat) -> UIImage? {
+    func scaledToWidth(_ width: CGFloat, customScale: CGFloat? = nil) -> UIImage? {
         guard width < size.width else { return self }
         let scale = width / size.width
         let newSize = CGSize(width: floor(width), height: floor(size.height * scale))
-        return resize(to: newSize)
+        return resize(to: newSize, customScale: customScale)
     }
 
-    func scaledToHeight(_ height: CGFloat) -> UIImage? {
+    func scaledToHeight(_ height: CGFloat, customScale: CGFloat? = nil) -> UIImage? {
         guard height < size.height else { return self }
         let scale = height / size.height
         let newSize = CGSize(width: floor(size.width * scale), height: floor(height))
-        return resize(to: newSize)
+        return resize(to: newSize, customScale: customScale)
     }
 }
 
