@@ -76,7 +76,9 @@ public extension UITableView {
 public extension UITableViewCell {
     var relatedTableView: UITableView? {
         var view = superview
-        while view != nil, !(view is UITableView) { view = view?.superview }
+        while view != nil, !(view is UITableView) {
+            view = view?.superview
+        }
         return view as? UITableView
     }
 
@@ -94,7 +96,9 @@ public extension UICollectionView {
 public extension UICollectionViewCell {
     var relatedCollectionView: UICollectionView? {
         var view = superview
-        while view != nil, !(view is UICollectionView) { view = view?.superview }
+        while view != nil, !(view is UICollectionView) {
+            view = view?.superview
+        }
         return view as? UICollectionView
     }
 }
@@ -131,7 +135,9 @@ public extension UITabBar {
     func indexOfItem(at point: CGPoint) -> Int? {
         var frames: [CGRect] = subviews.compactMap { if let v = $0 as? UIControl { return v.frame } else { return nil } }
         frames.sort { $0.origin.x < $1.origin.x }
-        for (index, rect) in frames.enumerated() { if rect.contains(point) { return index } }
+        for (index, rect) in frames.enumerated() {
+            if rect.contains(point) { return index }
+        }
         return nil
     }
 }
@@ -803,13 +809,17 @@ public func CGPointsOnOneLine(_ points: CGPoint...) -> Bool { return CGPointsOnO
 public func CGPointsOnOneLine(_ points: [CGPoint]) -> Bool {
     guard points.count > 2 else { return true }
     guard points.count > 3 else { return CGPointsOnOneLine(points[0], points[1], points[2]) }
-    for point in points[3 ..< points.count] { if !CGPointsOnOneLine(point, points[0], points[1]) { return false } }
+    for point in points[3 ..< points.count] {
+        if !CGPointsOnOneLine(point, points[0], points[1]) { return false }
+    }
     return true
 }
 
 public func CGPointNotIn(rects: CGRect..., point: CGPoint) -> Bool { return CGPointNotIn(rects: rects, point: point) }
 public func CGPointNotIn(rects: [CGRect], point: CGPoint) -> Bool {
-    for rect in rects { if rect.contains(point) { return false } }
+    for rect in rects {
+        if rect.contains(point) { return false }
+    }
     return true
 }
 
@@ -1177,7 +1187,9 @@ extension UITabBarController {
 
     var topVisibleViewController: UIViewController? {
         var top = selectedViewController
-        while top?.presentedViewController != nil { top = top?.presentedViewController }
+        while top?.presentedViewController != nil {
+            top = top?.presentedViewController
+        }
         return top
     }
 }
@@ -1245,11 +1257,10 @@ public extension UIScrollView {
 
     @discardableResult
     func scrollToTop(animated: Bool = true) -> CGPoint {
-        let topOffset: CGFloat
-        if #available(iOS 11.0, *) {
-            topOffset = -safeAreaInsets.top
+        let topOffset: CGFloat = if #available(iOS 11.0, *) {
+            -safeAreaInsets.top
         } else {
-            topOffset = -contentInset.top
+            -contentInset.top
         }
         let point = CGPoint(x: 0, y: topOffset)
         setContentOffset(point, animated: animated)

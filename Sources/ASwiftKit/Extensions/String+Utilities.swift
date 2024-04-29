@@ -25,13 +25,12 @@ public extension String {
     /// - parameter singular: `NSLocalizedString` containing no placeholders, `e.g. NSLocalizedString(@"One Friend", nil)`.
     /// - parameter pluralFormat: `NSLocalizedString` containing one `%@` for where the conditionalized number goes, e.g. `NSLocalizedString(@"%@ Friends", nil)`.
     init(format: String = "%@", number: Decimal, zero: String? = nil, singular: String, pluralFormat: String) {
-        let numberString: String
-        if number == 0, let zero {
-            numberString = zero
+        let numberString: String = if number == 0, let zero {
+            zero
         } else if abs(number) == 1 {
-            numberString = singular
+            singular
         } else {
-            numberString = String(format: pluralFormat, number as NSNumber)
+            String(format: pluralFormat, number as NSNumber)
         }
         self = String(format: format, numberString)
     }
@@ -110,8 +109,12 @@ public extension NSAttributedString {
 public extension NSAttributedString {
     func trimmedNewlines() -> NSAttributedString {
         var att = self
-        while att.string.first == "\n" { att = att.attributedSubstring(from: NSRange(location: 1, length: att.string.count - 1)) }
-        while att.string.last == "\n" { att = att.attributedSubstring(from: NSRange(location: 0, length: att.string.count - 1)) }
+        while att.string.first == "\n" {
+            att = att.attributedSubstring(from: NSRange(location: 1, length: att.string.count - 1))
+        }
+        while att.string.last == "\n" {
+            att = att.attributedSubstring(from: NSRange(location: 0, length: att.string.count - 1))
+        }
         return att
     }
 }
