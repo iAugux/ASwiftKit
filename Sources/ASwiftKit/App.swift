@@ -3,9 +3,11 @@
 
 import Foundation
 
+private class Inner {}
+
 public enum APP {
-    public static var version: String? { return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String }
-    public static var build: String? { return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String }
+    public static var version: String? { return Bundle(for: Inner.self).object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String }
+    public static var build: String? { return Bundle(for: Inner.self).object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String }
     public static func appStoreURL(with id: String) -> URL { return URL(string: appStorePath(with: id))! }
     public static func reviewURL(with id: String) -> URL { return URL(string: appStorePath(with: id) + "?action=write-review")! }
     public static func reviewsPageURL(with id: String) -> URL { return URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=\(id)")! }
