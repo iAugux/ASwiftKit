@@ -50,6 +50,10 @@ public extension String {
         return t.isEmpty ? nil : t
     }
 
+    var nilIfEmpty: String? {
+        return isEmpty ? nil : self
+    }
+
     mutating func replaceOccurrences(with dictionary: [String: String]) {
         self = self.replacingOccurrences(with: dictionary)
     }
