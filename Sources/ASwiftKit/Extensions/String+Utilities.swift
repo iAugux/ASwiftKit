@@ -3,7 +3,7 @@
 
 #if os(macOS)
 import AppKit
-#elseif os(iOS) || os(watchOS)
+#else
 import UIKit
 #endif
 
@@ -123,6 +123,7 @@ public extension NSAttributedString {
     }
 }
 
+#if os(iOS)
 public extension NSAttributedString {
     convenience init(htmlString: String) throws {
         guard let data = htmlString.data(using: .utf8) else {
@@ -136,6 +137,7 @@ public extension NSAttributedString {
         try self.init(data: htmlData, options: options, documentAttributes: nil)
     }
 }
+#endif
 
 private func ceil(_ size: CGSize) -> CGSize {
     return CGSize(width: ceil(size.width), height: ceil(size.height))

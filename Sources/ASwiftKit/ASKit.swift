@@ -4,7 +4,7 @@
 
 #if os(macOS)
 import AppKit
-#elseif os(iOS) || os(watchOS)
+#else
 import UIKit
 #endif
 
