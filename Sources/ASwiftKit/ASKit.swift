@@ -242,6 +242,7 @@ extension UIGestureRecognizer {
 }
 
 // MARK: - UIFeedbackGenerator Extensions
+@MainActor
 public enum HapticFeedbackConfig {
     public static var isEnabled = true
 }
