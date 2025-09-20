@@ -102,6 +102,9 @@ public extension String {
     }
 }
 
+#endif
+
+#if os(iOS) || os(macOS)
 public extension NSAttributedString {
     func size(maxWidth: CGFloat = .greatestFiniteMagnitude, maxHeight: CGFloat = .greatestFiniteMagnitude, ceiled: Bool = false) -> CGSize {
         let size = boundingRect(with: CGSize(width: maxWidth, height: maxHeight), options: .usesLineFragmentOrigin, context: nil).size
