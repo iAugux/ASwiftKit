@@ -7,6 +7,12 @@ import AppKit
 import UIKit
 #endif
 
+#if os(macOS)
+public typealias CompatibleFont = NSFont
+#elseif os(iOS)
+public typealias CompatibleFont = UIFont
+#endif
+
 public extension String {
     init?(number: Int, zero: String?, singular: String, pluralFormat: String) {
         switch number {
@@ -90,9 +96,9 @@ public extension String {
     }
 }
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
 public extension String {
-    func size(maxWidth: CGFloat = .greatestFiniteMagnitude, maxHeight: CGFloat = .greatestFiniteMagnitude, font: UIFont, ceiled: Bool = false) -> CGSize {
+    func size(maxWidth: CGFloat = .greatestFiniteMagnitude, maxHeight: CGFloat = .greatestFiniteMagnitude, font: CompatibleFont, ceiled: Bool = false) -> CGSize {
         return size(maxWidth: maxWidth, maxHeight: maxHeight, attributes: [NSAttributedString.Key.font: font], ceiled: ceiled)
     }
 
@@ -102,9 +108,6 @@ public extension String {
     }
 }
 
-#endif
-
-#if os(iOS) || os(macOS)
 public extension NSAttributedString {
     func size(maxWidth: CGFloat = .greatestFiniteMagnitude, maxHeight: CGFloat = .greatestFiniteMagnitude, ceiled: Bool = false) -> CGSize {
         let size = boundingRect(with: CGSize(width: maxWidth, height: maxHeight), options: .usesLineFragmentOrigin, context: nil).size
